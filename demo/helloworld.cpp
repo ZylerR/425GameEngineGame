@@ -11,7 +11,8 @@ string bruh;
 
 void callback()
 {
-    if (globalEngine.iManager.KeyIsPressed(65) == true)
+
+    if (globalEngine.iManager.KeyIsPressed(65) == true) //A key
     {
         //std::cout << "\nThe 'A' Key has been pressed!" << endl;
         globalECS.ForEach<SpriteEnt>([&](ECS::EntityID entity) {
@@ -24,7 +25,7 @@ void callback()
             }
             });
     }
-    if (globalEngine.iManager.KeyIsPressed(83) == true)
+    if (globalEngine.iManager.KeyIsPressed(83) == true) //S key
     {
         globalECS.ForEach<SpriteEnt>([&](ECS::EntityID entity) {
             if (globalECS.Get<SpriteEnt>(entity).name == "MarioTwo")
@@ -33,7 +34,7 @@ void callback()
             }
             });
     }
-    if (globalEngine.iManager.KeyIsPressed(68) == true)
+    if (globalEngine.iManager.KeyIsPressed(68) == true) //D key
     {
         globalECS.ForEach<SpriteEnt>([&](ECS::EntityID entity) {
             if (globalECS.Get<SpriteEnt>(entity).name == "MarioTwo")
@@ -42,7 +43,7 @@ void callback()
             }
             });
     }
-    if (globalEngine.iManager.KeyIsPressed(87) == true)
+    if (globalEngine.iManager.KeyIsPressed(87) == true) //W key
     {
         globalECS.ForEach<SpriteEnt>([&](ECS::EntityID entity) {
             if (globalECS.Get<SpriteEnt>(entity).name == "MarioTwo")
@@ -51,17 +52,23 @@ void callback()
             }
             });
     }
-    if (globalEngine.iManager.KeyIsPressed(32) == true)
+    if (globalEngine.iManager.KeyIsPressed(32) == true) //Space key
     {
+        std::cout << "spacebar entered" << endl;
         int xShip = 0;
         int yShip = 0;
-        ECS::EntityID newBull = globalECS.Create();
-        globalECS.Get<SpriteEnt>(newBull) = SpriteEnt{ "bulletNew", "./assets/bullet.png", vec2(0,0), vec2(20,20), 0 };
+
+        //This spawns a new bullet on ship
+        /*ECS::EntityID newBull = globalECS.Create();
+        globalECS.Get<SpriteEnt>(newBull) = SpriteEnt{ "bulletNew", "./assets/bullet.png", vec2(0,0), vec2(5,5), 0 };
         globalECS.ForEach<SpriteEnt>([&](ECS::EntityID entity) {
             if (globalECS.Get<SpriteEnt>(entity).name == "bulletNew")
                 globalEngine.gManager.sprites.push_back(globalECS.Get<SpriteEnt>(entity));//THIS PUTS SPRITES INTO VECTOR TO DISPLAY (UPDATE TO WORK DURING RUN)
             globalEngine.gManager.LoadAnImage(globalECS.Get<SpriteEnt>(entity).name, globalECS.Get<SpriteEnt>(entity).path);
             });
+        */
+
+        //this gets ship's current position of frame
         globalECS.ForEach<SpriteEnt>([&](ECS::EntityID entity) {
             if (globalECS.Get<SpriteEnt>(entity).name == "MarioTwo")
             {
@@ -69,31 +76,304 @@ void callback()
                 yShip = globalECS.Get<SpriteEnt>(entity).pos.y;
             }
             });
-        globalECS.ForEach<SpriteEnt>([&](ECS::EntityID entity) {
+
+        //shoots bullet from current ship frame
+        /*globalECS.ForEach<SpriteEnt>([&](ECS::EntityID entity) {
             if (globalECS.Get<SpriteEnt>(entity).name == "bulletNew")
             {
                 globalECS.Get<SpriteEnt>(entity).pos.y = yShip;
                 globalECS.Get<SpriteEnt>(entity).pos.x = xShip;
             }
             });
+            */
+
+        globalECS.ForEach<SpriteEnt>([&](ECS::EntityID entity) { // bullet's movement
+
+            /*if (count == 0) {
+
+                if (globalECS.Get<SpriteEnt>(entity).name == "bullet") {
+                    globalECS.Get<SpriteEnt>(entity).pos.y = yShip;
+                    globalECS.Get<SpriteEnt>(entity).pos.x = xShip;
+                }
+
+                count++;
+            }
+            else if (count == 1) {
+
+                if (globalECS.Get<SpriteEnt>(entity).name == "bullet1") {
+                    globalECS.Get<SpriteEnt>(entity).pos.y = yShip;
+                    globalECS.Get<SpriteEnt>(entity).pos.x = xShip;
+                }
+
+                count++;
+            }
+            else {
+
+                if (globalECS.Get<SpriteEnt>(entity).name == "bullet2") {
+                    globalECS.Get<SpriteEnt>(entity).pos.y = yShip;
+                    globalECS.Get<SpriteEnt>(entity).pos.x = xShip;
+                }
+
+                count = 0;
+            }*/
+
+            if (globalECS.Get<SpriteEnt>(entity).name == "bullet" && globalECS.Get<SpriteEnt>(entity).pos.y > 890) {
+                std::cout << "bullet bullet bulllet bullet bullet bullet" << endl;
+                if (globalECS.Get<SpriteEnt>(entity).name == "bullet") {
+                    globalECS.Get<SpriteEnt>(entity).pos.y = yShip;
+                    globalECS.Get<SpriteEnt>(entity).pos.x = xShip;
+                }
+            }
+            else if (globalECS.Get<SpriteEnt>(entity).name == "bullet1" && globalECS.Get<SpriteEnt>(entity).pos.y > 1090) {
+                std::cout << "bullet1 bullet1 bullet1 bullet1 bullet1 bullet1 bullet1" << endl;
+                if (globalECS.Get<SpriteEnt>(entity).name == "bullet1") {
+                    globalECS.Get<SpriteEnt>(entity).pos.y = yShip;
+                    globalECS.Get<SpriteEnt>(entity).pos.x = xShip;
+                }
+            }
+            else if (globalECS.Get<SpriteEnt>(entity).name == "bullet2" && globalECS.Get<SpriteEnt>(entity).pos.y > 1290){
+                std::cout << "bullet2 bullet2 bullet2 bullet2 bullet2 bullet2" << endl;
+                if (globalECS.Get<SpriteEnt>(entity).name == "bullet2") {
+                    globalECS.Get<SpriteEnt>(entity).pos.y = yShip;
+                    globalECS.Get<SpriteEnt>(entity).pos.x = xShip;
+                }
+            }
+
+            });
         
         
     }
-    globalECS.ForEach<SpriteEnt>([&](ECS::EntityID entity) {
-            if (globalECS.Get<SpriteEnt>(entity).name == "bulletNew")
-            {
-                globalECS.Get<SpriteEnt>(entity).pos.y += 10;
-            }
-    });
 
-    
-        globalECS.ForEach<SpriteEnt, Velocity>([&](ECS::EntityID entity) {
+    globalECS.ForEach<SpriteEnt>([&](ECS::EntityID entity) {
+        if (globalECS.Get<SpriteEnt>(entity).name == "bullet" && globalECS.Get<SpriteEnt>(entity).pos.y < 900)
+        {
+            globalECS.Get<SpriteEnt>(entity).pos.y += 3;
+        }
+        });
+
+    globalECS.ForEach<SpriteEnt>([&](ECS::EntityID entity) {
+        if (globalECS.Get<SpriteEnt>(entity).name == "bullet1" && globalECS.Get<SpriteEnt>(entity).pos.y < 1100)
+        {
+            globalECS.Get<SpriteEnt>(entity).pos.y += 3;
+        }
+        });
+
+    globalECS.ForEach<SpriteEnt>([&](ECS::EntityID entity) {
+        if (globalECS.Get<SpriteEnt>(entity).name == "bullet2" && globalECS.Get<SpriteEnt>(entity).pos.y < 1300)
+        {
+            globalECS.Get<SpriteEnt>(entity).pos.y += 3;
+        }
+        });
+
+    /*globalECS.ForEach<SpriteEnt>([&](ECS::EntityID entity) {
+        if (globalECS.Get<SpriteEnt>(entity).name == "bullet" && globalECS.Get<SpriteEnt>(entity).pos.y == 600)
+        {
+            std::cout << "bullet is at pixel 600, soon shot" << endl;
+        }
+
+        if (globalECS.Get<SpriteEnt>(entity).name == "bullet" && globalECS.Get<SpriteEnt>(entity).pos.y == 900)
+        {
+            std::cout << "bullet is at pixel 900" << endl;
+        }
+        });
+
+    globalECS.ForEach<SpriteEnt>([&](ECS::EntityID entity) {
+        if (globalECS.Get<SpriteEnt>(entity).name == "bullet1" && globalECS.Get<SpriteEnt>(entity).pos.y == 600)
+        {
+            std::cout << "bullet1 is at pixel 600, soon shot" << endl;
+        }
+        if (globalECS.Get<SpriteEnt>(entity).name == "bullet1" && globalECS.Get<SpriteEnt>(entity).pos.y == 1100)
+        {
+            std::cout << "bullet1 is at pixel 1100" << endl;
+        }
+        });
+    globalECS.ForEach<SpriteEnt>([&](ECS::EntityID entity) {
+        if (globalECS.Get<SpriteEnt>(entity).name == "bullet2" && globalECS.Get<SpriteEnt>(entity).pos.y == 600)
+        {
+            std::cout << "bullet2 is at pixel 600, soon shot" << endl;
+        }
+        if (globalECS.Get<SpriteEnt>(entity).name == "bullet2" && globalECS.Get<SpriteEnt>(entity).pos.y == 1300)
+        {
+            std::cout << "bullet2 is at pixel 1300" << endl;
+        }
+        });*/
+
+    globalECS.ForEach<SpriteEnt>([&](ECS::EntityID entity) {
+        if (globalECS.Get<SpriteEnt>(entity).name == "MarioTwo1")
+        {
+            globalECS.Get<SpriteEnt>(entity).pos.y -= 0.1;
+
+        }
+        });
+
+    globalECS.ForEach<SpriteEnt>([&](ECS::EntityID entity) {
+        if (globalECS.Get<SpriteEnt>(entity).name == "MarioTwo2")
+        {
+            globalECS.Get<SpriteEnt>(entity).pos.y -= 0.1;
+
+        }
+        });
+
+    globalECS.ForEach<SpriteEnt>([&](ECS::EntityID entity) {
+        if (globalECS.Get<SpriteEnt>(entity).name == "MarioTwo3")
+        {
+            globalECS.Get<SpriteEnt>(entity).pos.y -= 0.1;
+
+        }
+        });
+
+    globalECS.ForEach<SpriteEnt>([&](ECS::EntityID entity) {
+        if (globalECS.Get<SpriteEnt>(entity).name == "MarioTwo4")
+        {
+            globalECS.Get<SpriteEnt>(entity).pos.y -= 0.1;
+
+        }
+        });
+
+    globalECS.ForEach<SpriteEnt>([&](ECS::EntityID entity) {
+        if (globalECS.Get<SpriteEnt>(entity).name == "MarioTwo5" && globalECS.Get<SpriteEnt>(entity).pos.x <= -60)
+        {
+            globalECS.Get<SpriteEnt>(entity).pos.y -= 0.1;
+
+        }
+        else if (globalECS.Get<SpriteEnt>(entity).name == "MarioTwo5" && globalECS.Get<SpriteEnt>(entity).pos.x > -60)
+        {
+            globalECS.Get<SpriteEnt>(entity).pos.y -= 0.35;
+        }
+
+        if (globalECS.Get<SpriteEnt>(entity).name == "MarioTwo5" && globalECS.Get<SpriteEnt>(entity).pos.y < -110)
+        {
+            std::cout << "MT5 at 110" << endl;
+            globalECS.Get<SpriteEnt>(entity).pos.y = 65;
+            globalECS.Get<SpriteEnt>(entity).pos.x = -110;
+        }
+        });
+
+    globalECS.ForEach<SpriteEnt>([&](ECS::EntityID entity) {
+        if (globalECS.Get<SpriteEnt>(entity).name == "MarioTwo6" && globalECS.Get<SpriteEnt>(entity).pos.x >= 60)
+        {
+            globalECS.Get<SpriteEnt>(entity).pos.y -= 0.1;
+
+        }
+        else if (globalECS.Get<SpriteEnt>(entity).name == "MarioTwo6" && globalECS.Get<SpriteEnt>(entity).pos.x < 60)
+        {
+            globalECS.Get<SpriteEnt>(entity).pos.y -= 0.35;
+        }
+
+        if (globalECS.Get<SpriteEnt>(entity).name == "MarioTwo6" && globalECS.Get<SpriteEnt>(entity).pos.y < -110)
+        {
+            std::cout << "MT6 at 110" << endl;
+            globalECS.Get<SpriteEnt>(entity).pos.y = 65;
+            globalECS.Get<SpriteEnt>(entity).pos.x = 110;
+        }
+        });
+
+
+    ////
+
+    globalECS.ForEach<SpriteEnt>([&](ECS::EntityID entity) {
+        if (globalECS.Get<SpriteEnt>(entity).name == "MarioTwo2" && (globalECS.Get<SpriteEnt>(entity).pos.y <= 35 && globalECS.Get<SpriteEnt>(entity).pos.y > 0))
+        {
+            globalECS.Get<SpriteEnt>(entity).pos.x += 0.1;
+        }
+        else if (globalECS.Get<SpriteEnt>(entity).name == "MarioTwo2" && (globalECS.Get<SpriteEnt>(entity).pos.y <= 0 && globalECS.Get<SpriteEnt>(entity).pos.y > -35))
+        {
+            globalECS.Get<SpriteEnt>(entity).pos.x -= 0.1;
+        }
+        else if (globalECS.Get<SpriteEnt>(entity).name == "MarioTwo2" && globalECS.Get<SpriteEnt>(entity).pos.y <= -35)
+        {
+            globalECS.Get<SpriteEnt>(entity).pos.x += 0.1;
+        }
+        });
+
+    globalECS.ForEach<SpriteEnt>([&](ECS::EntityID entity) {
+        if (globalECS.Get<SpriteEnt>(entity).name == "MarioTwo3" && (globalECS.Get<SpriteEnt>(entity).pos.y <= 35 && globalECS.Get<SpriteEnt>(entity).pos.y > 0))
+        {
+            globalECS.Get<SpriteEnt>(entity).pos.x -= 0.1;
+        }
+        else if (globalECS.Get<SpriteEnt>(entity).name == "MarioTwo3" && (globalECS.Get<SpriteEnt>(entity).pos.y <= 0 && globalECS.Get<SpriteEnt>(entity).pos.y > -35))
+        {
+            globalECS.Get<SpriteEnt>(entity).pos.x += 0.1;
+        }
+        else if (globalECS.Get<SpriteEnt>(entity).name == "MarioTwo3" && globalECS.Get<SpriteEnt>(entity).pos.y <= -35)
+        {
+            globalECS.Get<SpriteEnt>(entity).pos.x -= 0.1;
+        }
+        });
+
+    ////
+
+
+
+    globalECS.ForEach<SpriteEnt>([&](ECS::EntityID entity) {
+        if (globalECS.Get<SpriteEnt>(entity).name == "MarioTwo1" && globalECS.Get<SpriteEnt>(entity).pos.y < -110)
+        {
+            std::cout << "MT1 at 110" << endl;
+            globalECS.Get<SpriteEnt>(entity).pos.y = 110;
+        }
+        });
+
+    globalECS.ForEach<SpriteEnt>([&](ECS::EntityID entity) {
+        if (globalECS.Get<SpriteEnt>(entity).name == "MarioTwo2" && globalECS.Get<SpriteEnt>(entity).pos.y < -110)
+        {
+            std::cout << "MT2 at 110" << endl;
+            globalECS.Get<SpriteEnt>(entity).pos.y = 110;
+            globalECS.Get<SpriteEnt>(entity).pos.x = -35;
+        }
+        });
+
+    globalECS.ForEach<SpriteEnt>([&](ECS::EntityID entity) {
+        if (globalECS.Get<SpriteEnt>(entity).name == "MarioTwo3" && globalECS.Get<SpriteEnt>(entity).pos.y < -110)
+        {
+            std::cout << "MT3 at 110" << endl;
+            globalECS.Get<SpriteEnt>(entity).pos.y = 110;
+            globalECS.Get<SpriteEnt>(entity).pos.x = 35;
+        }
+        });
+
+    globalECS.ForEach<SpriteEnt>([&](ECS::EntityID entity) {
+        if (globalECS.Get<SpriteEnt>(entity).name == "MarioTwo4" && globalECS.Get<SpriteEnt>(entity).pos.y < -110)
+        {
+            std::cout << "MT4 at 110" << endl;
+            globalECS.Get<SpriteEnt>(entity).pos.y = 110;
+        }
+        });
+
+    ////
+
+    globalECS.ForEach<SpriteEnt>([&](ECS::EntityID entity) {
+
+        int xShip = 0;
+
+        //this gets ship's current position of frame
+        globalECS.ForEach<SpriteEnt>([&](ECS::EntityID entity) {
+            if (globalECS.Get<SpriteEnt>(entity).name == "MarioTwo")
+            {
+                xShip = globalECS.Get<SpriteEnt>(entity).pos.x;
+            }
+            });
+
+        if (globalECS.Get<SpriteEnt>(entity).name == "MarioTwo5" && globalECS.Get<SpriteEnt>(entity).pos.x < xShip)
+        {
+            globalECS.Get<SpriteEnt>(entity).pos.x += 0.15;
+            
+        }
+
+        if (globalECS.Get<SpriteEnt>(entity).name == "MarioTwo6" && globalECS.Get<SpriteEnt>(entity).pos.x > xShip)
+        {
+            globalECS.Get<SpriteEnt>(entity).pos.x -= 0.15;
+
+        }
+
+        });
+
+    globalECS.ForEach<SpriteEnt, Velocity>([&](ECS::EntityID entity) {
             //std::cout << "Name of Sprite: " << globalECS.Get<SpriteEnt>(entity).name << endl;
             //std::cout << "Has Velocity: " << globalECS.Get<Velocity>(entity).x << endl;
             //globalECS.Get<SpriteEnt>(entity).name = "BRUH";
 
             //std::cout << "Z Val New: " << globalECS.Get<SpriteEnt>(entity).name << endl;
-            });
+        });
     
 }
 int main(int argc, const char* argv[]) {
@@ -103,12 +383,33 @@ int main(int argc, const char* argv[]) {
     globalECS.Get<Velocity>(newID).x = 100;
     globalECS.Get<SpriteEnt>(newID) = SpriteEnt{ "starBG", "./assets/stars.jpg", vec2(0,0), vec2(100,100), 0 };
     globalECS.Get<Script>(newID).name = "testScript";
+    
     ECS::EntityID bullet = globalECS.Create();
-    globalECS.Get<SpriteEnt>(bullet) = SpriteEnt{ "bullet", "./assets/bullet.png", vec2(1000,0), vec2(10,10), 0 };
+    globalECS.Get<SpriteEnt>(bullet) = SpriteEnt{ "bullet", "./assets/bullet.png", vec2(-30,70), vec2(10,10), 0 };
+    ECS::EntityID bullet1 = globalECS.Create();
+    globalECS.Get<SpriteEnt>(bullet1) = SpriteEnt{ "bullet1", "./assets/bullet.png", vec2(-45,70), vec2(10,10), 0 };
+    ECS::EntityID bullet2 = globalECS.Create();
+    globalECS.Get<SpriteEnt>(bullet2) = SpriteEnt{ "bullet2", "./assets/bullet.png", vec2(-55,70), vec2(10,10), 0 };
+
     ECS::EntityID newIDTwo = globalECS.Create();
-    globalECS.Get<SpriteEnt>(newIDTwo) = SpriteEnt{ "MarioTwo", "./assets/ship.jpg", vec2(0,0), vec2(20,20), 0 };
+    globalECS.Get<SpriteEnt>(newIDTwo) = SpriteEnt{ "MarioTwo", "./assets/ship.jpg", vec2(0,-90), vec2(15,15), 0};
     globalECS.Get<Position>(newIDTwo).x = 10;
     d = globalECS.Get<SpriteEnt>(newID).z;
+
+    ECS::EntityID newIDTwo1 = globalECS.Create();
+    globalECS.Get<SpriteEnt>(newIDTwo1) = SpriteEnt{ "MarioTwo1", "./assets/ship.jpg", vec2(-70,70), vec2(5,5), 0 };
+    ECS::EntityID newIDTwo2 = globalECS.Create();
+    globalECS.Get<SpriteEnt>(newIDTwo2) = SpriteEnt{ "MarioTwo2", "./assets/ship.jpg", vec2(-35,70), vec2(5,5), 0 };
+    ECS::EntityID newIDTwo3 = globalECS.Create();
+    globalECS.Get<SpriteEnt>(newIDTwo3) = SpriteEnt{ "MarioTwo3", "./assets/ship.jpg", vec2(35,70), vec2(5,5), 0 };
+    ECS::EntityID newIDTwo4 = globalECS.Create();
+    globalECS.Get<SpriteEnt>(newIDTwo4) = SpriteEnt{ "MarioTwo4", "./assets/ship.jpg", vec2(70,70), vec2(5,5), 0 };
+
+    ECS::EntityID newIDTwo5 = globalECS.Create();
+    globalECS.Get<SpriteEnt>(newIDTwo5) = SpriteEnt{ "MarioTwo5", "./assets/ship.jpg", vec2(-110,65), vec2(5,5), 0 };
+    ECS::EntityID newIDTwo6 = globalECS.Create();
+    globalECS.Get<SpriteEnt>(newIDTwo6) = SpriteEnt{ "MarioTwo6", "./assets/ship.jpg", vec2(110,65), vec2(5,5), 0 };
+
     globalECS.ForEach<SpriteEnt>([&](ECS::EntityID entity) {
         globalEngine.gManager.LoadAnImage(globalECS.Get<SpriteEnt>(entity).name, globalECS.Get<SpriteEnt>(entity).path);
         });
