@@ -502,7 +502,7 @@ int main(int argc, const char* argv[]) {
     globalECS.Get<SpriteEnt>(bullet2) = SpriteEnt{ "bullet2", "./assets/bullet.png", vec2(-55,70), vec2(4,4), 0 };
 
     ECS::EntityID newIDTwo = globalECS.Create();
-    globalECS.Get<SpriteEnt>(newIDTwo) = SpriteEnt{ "MarioTwo", "./assets/ship.jpg", vec2(0,-40), vec2(10,10), 0};
+    globalECS.Get<SpriteEnt>(newIDTwo) = SpriteEnt{ "MarioTwo", "./assets/shipFix.png", vec2(0,-40), vec2(10,10), 0};
     globalECS.Get<Position>(newIDTwo).x = 10;
     d = globalECS.Get<SpriteEnt>(newID).z;
 
