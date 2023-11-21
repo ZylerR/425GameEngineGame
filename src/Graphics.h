@@ -32,8 +32,8 @@ class Graphics{
 		} spr;*/
 		std::unordered_map<std::string, Images> imageSave;
 		GLFWwindow* window;
-		int window_width = 1000;
-		int window_height = 1000;
+		int window_width = 1920;//EDITED!!
+		int window_height = 1080;//EDITED!!
 		std::vector<SpriteEnt> sprites;
 		char* window_name; 
 		bool window_fullscreen;
