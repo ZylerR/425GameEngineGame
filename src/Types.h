@@ -21,6 +21,7 @@ namespace GameEng {
 		string name;
 		string path; 
 		vec2 pos;
+		vec2 vel;
 		vec2 scale; //vec2
 		int z;
 	};
