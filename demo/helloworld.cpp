@@ -10,10 +10,13 @@ int d;
 string bruh;
 bool gameplay = true;
 int speedUp;
+int bulletNum = 0;
+bool gtfo = false;
 
 
 void callback()
 {
+    
     if (gameplay == true)
     {
         speedUp = 0; 
@@ -129,37 +132,43 @@ void callback()
                 });
                 */
 
+
+
             globalECS.ForEach<SpriteEnt>([&](ECS::EntityID entity) { // bullet's movement
 
-                /*if (count == 0) {
-
+                if (bulletNum == 0 && globalECS.Get<SpriteEnt>(entity).name == "bullet" && globalECS.Get<SpriteEnt>(entity).pos.y > 105) {
+                    std::cout << "was entereddddddddddddddddddddddddddddddddddddddddddddddddddddddddd" << endl;
                     if (globalECS.Get<SpriteEnt>(entity).name == "bullet") {
                         globalECS.Get<SpriteEnt>(entity).pos.y = yShip;
                         globalECS.Get<SpriteEnt>(entity).pos.x = xShip;
                     }
 
-                    count++;
                 }
-                else if (count == 1) {
+                else if (bulletNum == 1 && globalECS.Get<SpriteEnt>(entity).name == "bullet1" && globalECS.Get<SpriteEnt>(entity).pos.y > 105) {
 
                     if (globalECS.Get<SpriteEnt>(entity).name == "bullet1") {
                         globalECS.Get<SpriteEnt>(entity).pos.y = yShip;
                         globalECS.Get<SpriteEnt>(entity).pos.x = xShip;
                     }
 
-                    count++;
                 }
                 else {
 
-                    if (globalECS.Get<SpriteEnt>(entity).name == "bullet2") {
+                    if (globalECS.Get<SpriteEnt>(entity).name == "bullet2" && globalECS.Get<SpriteEnt>(entity).pos.y > 105) {
                         globalECS.Get<SpriteEnt>(entity).pos.y = yShip;
                         globalECS.Get<SpriteEnt>(entity).pos.x = xShip;
                     }
 
-                    count = 0;
-                }*/
+                }
 
-                if (globalECS.Get<SpriteEnt>(entity).name == "bullet" && globalECS.Get<SpriteEnt>(entity).pos.y > 890) {
+                if (bulletNum == 2) {
+                    bulletNum = 0;
+                }
+                else {
+                    bulletNum++;
+                }
+           
+                /*if (globalECS.Get<SpriteEnt>(entity).name == "bullet" && globalECS.Get<SpriteEnt>(entity).pos.y > 890) {
                     std::cout << "bullet bullet bulllet bullet bullet bullet" << endl;
                     if (globalECS.Get<SpriteEnt>(entity).name == "bullet") {
                         globalECS.Get<SpriteEnt>(entity).pos.y = yShip;
@@ -179,7 +188,7 @@ void callback()
                         globalECS.Get<SpriteEnt>(entity).pos.y = yShip;
                         globalECS.Get<SpriteEnt>(entity).pos.x = xShip;
                     }
-                }
+                }*/
 
                 });
 
@@ -187,21 +196,21 @@ void callback()
         }
 
         globalECS.ForEach<SpriteEnt>([&](ECS::EntityID entity) {
-            if (globalECS.Get<SpriteEnt>(entity).name == "bullet" && globalECS.Get<SpriteEnt>(entity).pos.y < 900)
+            if (globalECS.Get<SpriteEnt>(entity).name == "bullet" && globalECS.Get<SpriteEnt>(entity).pos.y < 110)
             {
                 globalECS.Get<SpriteEnt>(entity).pos.y += 3;
             }
             });
 
         globalECS.ForEach<SpriteEnt>([&](ECS::EntityID entity) {
-            if (globalECS.Get<SpriteEnt>(entity).name == "bullet1" && globalECS.Get<SpriteEnt>(entity).pos.y < 1100)
+            if (globalECS.Get<SpriteEnt>(entity).name == "bullet1" && globalECS.Get<SpriteEnt>(entity).pos.y < 110)
             {
                 globalECS.Get<SpriteEnt>(entity).pos.y += 3;
             }
             });
 
         globalECS.ForEach<SpriteEnt>([&](ECS::EntityID entity) {
-            if (globalECS.Get<SpriteEnt>(entity).name == "bullet2" && globalECS.Get<SpriteEnt>(entity).pos.y < 1300)
+            if (globalECS.Get<SpriteEnt>(entity).name == "bullet2" && globalECS.Get<SpriteEnt>(entity).pos.y < 110)
             {
                 globalECS.Get<SpriteEnt>(entity).pos.y += 3;
             }
@@ -474,7 +483,7 @@ void callback()
                 //std::cout << "BULL" << globalECS.Get<SpriteEnt>(entity).pos.y << endl;
             });
         globalECS.ForEach<SpriteEnt>([&](ECS::EntityID entity) {
-            if (globalECS.Get<SpriteEnt>(entity).scale.x == 6 && globalECS.Get<SpriteEnt>(entity).scale.y == 6)
+            if (globalECS.Get<SpriteEnt>(entity).scale.x == 6 && globalECS.Get<SpriteEnt>(entity).scale.y == 6) //this is where enemies are hit
             {
                 //std::cout << "SCALE 5 5 LOLLLLLLLLL" << globalECS.Get<SpriteEnt>(entity).name << endl;
                 if ((abs(xShipPos - globalECS.Get<SpriteEnt>(entity).pos.x) < 10) && (abs(yShipPos - globalECS.Get<SpriteEnt>(entity).pos.y) < 10))
@@ -503,15 +512,15 @@ void callback()
                 }
                 if ((abs(bOneX - globalECS.Get<SpriteEnt>(entity).pos.x) < 10) && (abs(bOneY - globalECS.Get<SpriteEnt>(entity).pos.y) < 10))
                 {
-                    globalECS.Get<SpriteEnt>(entity).pos.y = 2000;
+                    globalECS.Get<SpriteEnt>(entity).pos.y = 120;
                 }
                 if ((abs(bTwoX - globalECS.Get<SpriteEnt>(entity).pos.x) < 10) && (abs(bTwoY - globalECS.Get<SpriteEnt>(entity).pos.y) < 10))
                 {
-                    globalECS.Get<SpriteEnt>(entity).pos.y = 2000;
+                    globalECS.Get<SpriteEnt>(entity).pos.y = 120;
                 }
                 if ((abs(bThreeX - globalECS.Get<SpriteEnt>(entity).pos.x) < 10) && (abs(bThreeY - globalECS.Get<SpriteEnt>(entity).pos.y) < 10))
                 {
-                    globalECS.Get<SpriteEnt>(entity).pos.y = 2000;
+                    globalECS.Get<SpriteEnt>(entity).pos.y = 120;
                 }
 
                 //std::cout << "Bullet One Name: " << globalECS.Get<SpriteEnt>(globulletOne).pos.x << endl;
@@ -532,16 +541,16 @@ int main(int argc, const char* argv[]) {
     
     ECS::EntityID bullet = globalECS.Create();
     //globulletOne = bullet;
-    globalECS.Get<SpriteEnt>(bullet) = SpriteEnt{ "bullet", "./assets/bullet.png", vec2(-30,70), vec2(0,0), vec2(4,4), 0 };
+    globalECS.Get<SpriteEnt>(bullet) = SpriteEnt{ "bullet", "./assets/bullet.png", vec2(-30,0), vec2(0,0), vec2(4,4), 0 };
     ECS::EntityID bullet1 = globalECS.Create();
     //globulletTwo = bullet1;
-    globalECS.Get<SpriteEnt>(bullet1) = SpriteEnt{ "bullet1", "./assets/bullet.png", vec2(-45,70), vec2(0,0), vec2(4,4), 0 };
+    globalECS.Get<SpriteEnt>(bullet1) = SpriteEnt{ "bullet1", "./assets/bullet.png", vec2(-45,0), vec2(0,0), vec2(4,4), 0 };
     ECS::EntityID bullet2 = globalECS.Create();
     //globulletThree = bullet2;
-    globalECS.Get<SpriteEnt>(bullet2) = SpriteEnt{ "bullet2", "./assets/bullet.png", vec2(-55,70), vec2(0,0), vec2(4,4), 0 };
+    globalECS.Get<SpriteEnt>(bullet2) = SpriteEnt{ "bullet2", "./assets/bullet.png", vec2(-55,0), vec2(0,0), vec2(4,4), 0 };
 
     ECS::EntityID newIDTwo = globalECS.Create();
-    globalECS.Get<SpriteEnt>(newIDTwo) = SpriteEnt{ "MarioTwo", "./assets/shipFix.png", vec2(0,-40), vec2(0,0), vec2(10,10), 0};
+    globalECS.Get<SpriteEnt>(newIDTwo) = SpriteEnt{ "MarioTwo", "./assets/shipFix.png", vec2(90,-53.5), vec2(0,0), vec2(10,10), 0}; //90 hori edge of screen, 53.5 vert edge
     globalECS.Get<Position>(newIDTwo).x = 10;
     d = globalECS.Get<SpriteEnt>(newID).z;
     
