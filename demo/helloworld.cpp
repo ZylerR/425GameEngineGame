@@ -14,11 +14,17 @@ int bulletNum = 0;
 bool gtfo = false;
 bool keepHorizontal5 = true;
 bool keepHorizontal6 = true;
+int menuDisplay = 1;
+int cantPressEnt = 0;
+int explosionDurationOne = 10;
+int explosionDurationTwo = 10;
+int explosionDurationThree = 10;
+int explodePick = 0;
 
 
 void callback()
 {
-    if (gameplay == false) {
+    if (gameplay == false && menuDisplay == 1) {
         globalECS.ForEach<SpriteEnt>([&](ECS::EntityID entity) {
             //std::cout << globalECS.Get<SpriteEnt>(entity).name << " Name of sprite" << endl;
             if (globalECS.Get<SpriteEnt>(entity).name == "menu")
@@ -26,11 +32,14 @@ void callback()
                 globalECS.Get<SpriteEnt>(entity).pos.x = 0;
             }
             });
-
-        if (globalEngine.iManager.KeyIsPressed(257) == true) //enter key
+        if (cantPressEnt < 10)
+        {
+            cantPressEnt++;
+        }
+        if (globalEngine.iManager.KeyIsPressed(257) == true && cantPressEnt == 10) //enter key
         {
             gameplay = true;
-
+            menuDisplay = 0;
             globalECS.ForEach<SpriteEnt>([&](ECS::EntityID entity) {
                 //std::cout << globalECS.Get<SpriteEnt>(entity).name << " Name of sprite" << endl;
                 if (globalECS.Get<SpriteEnt>(entity).name == "menu")
@@ -38,10 +47,158 @@ void callback()
                     globalECS.Get<SpriteEnt>(entity).pos.x = 500;
                 }
                 });
+            cantPressEnt = 0;
         }
+    }
+    if (gameplay == false && menuDisplay == 0) {
+        globalECS.ForEach<SpriteEnt>([&](ECS::EntityID entity) {
+
+        if (globalEngine.iManager.KeyIsPressed(257) == true) //enter key
+        {
+            //gameplay = true;
+            menuDisplay = 1;
+            globalECS.ForEach<SpriteEnt>([&](ECS::EntityID entity) {
+                if (globalECS.Get<SpriteEnt>(entity).name == "bullet")
+                {
+                    globalECS.Get<SpriteEnt>(entity).pos.x = -30;
+                    globalECS.Get<SpriteEnt>(entity).pos.y = 200;
+                }
+                if (globalECS.Get<SpriteEnt>(entity).name == "bullet1")
+                {
+                    globalECS.Get<SpriteEnt>(entity).pos.x = -45;
+                    globalECS.Get<SpriteEnt>(entity).pos.y = 200;
+                }
+                if (globalECS.Get<SpriteEnt>(entity).name == "bullet2")
+                {
+                    globalECS.Get<SpriteEnt>(entity).pos.x = -55;
+                    globalECS.Get<SpriteEnt>(entity).pos.y = 200;
+                }
+                if (globalECS.Get<SpriteEnt>(entity).name == "MarioTwo")
+                {
+                    globalECS.Get<SpriteEnt>(entity).pos.x = 0;
+                    globalECS.Get<SpriteEnt>(entity).pos.y = -48;
+                    globalECS.Get<SpriteEnt>(entity).vel.y = 0;
+                    globalECS.Get<SpriteEnt>(entity).vel.x = 0;
+                }
+                if (globalECS.Get<SpriteEnt>(entity).name == "MarioTwo1")
+                {
+                    globalECS.Get<SpriteEnt>(entity).pos.x = -70;
+                    globalECS.Get<SpriteEnt>(entity).pos.y = 70;
+                }
+                if (globalECS.Get<SpriteEnt>(entity).name == "MarioTwo2")
+                {
+                    globalECS.Get<SpriteEnt>(entity).pos.x = -35;
+                    globalECS.Get<SpriteEnt>(entity).pos.y = 70;
+                }
+                if (globalECS.Get<SpriteEnt>(entity).name == "MarioTwo3")
+                {
+                    globalECS.Get<SpriteEnt>(entity).pos.x = 35;
+                    globalECS.Get<SpriteEnt>(entity).pos.y = 70;
+                }
+                if (globalECS.Get<SpriteEnt>(entity).name == "MarioTwo4")
+                {
+                    globalECS.Get<SpriteEnt>(entity).pos.x = 70;
+                    globalECS.Get<SpriteEnt>(entity).pos.y = 70;
+                }
+                if (globalECS.Get<SpriteEnt>(entity).name == "MarioTwo5")
+                {
+                    globalECS.Get<SpriteEnt>(entity).pos.x = -600;
+                    globalECS.Get<SpriteEnt>(entity).pos.y = 43;
+                }
+                if (globalECS.Get<SpriteEnt>(entity).name == "MarioTwo6")
+                {
+                    globalECS.Get<SpriteEnt>(entity).pos.x = 600;
+                    globalECS.Get<SpriteEnt>(entity).pos.y = 43;
+                }
+                if (globalECS.Get<SpriteEnt>(entity).name == "highRat1")
+                {
+                    globalECS.Get<SpriteEnt>(entity).pos.x = -1100;
+                    globalECS.Get<SpriteEnt>(entity).pos.y = 43;
+                }
+                if (globalECS.Get<SpriteEnt>(entity).name == "highRat2")
+                {
+                    globalECS.Get<SpriteEnt>(entity).pos.x = 1200;
+                    globalECS.Get<SpriteEnt>(entity).pos.y = 15;
+                }
+                if (globalECS.Get<SpriteEnt>(entity).name == "highRat3")
+                {
+                    globalECS.Get<SpriteEnt>(entity).pos.x = -1200;
+                    globalECS.Get<SpriteEnt>(entity).pos.y = 20;
+                }
+                if (globalECS.Get<SpriteEnt>(entity).name == "highRat4")
+                {
+                    globalECS.Get<SpriteEnt>(entity).pos.x = 1100;
+                    globalECS.Get<SpriteEnt>(entity).pos.y = -48;
+                }
+                if (globalECS.Get<SpriteEnt>(entity).name == "bossRat1")
+                {
+                    globalECS.Get<SpriteEnt>(entity).pos.x = -80;
+                    globalECS.Get<SpriteEnt>(entity).pos.y = 2000;
+                }
+                if (globalECS.Get<SpriteEnt>(entity).name == "bossRat2")
+                {
+                    globalECS.Get<SpriteEnt>(entity).pos.x = 80;
+                    globalECS.Get<SpriteEnt>(entity).pos.y = 2500;
+                }
+                if (globalECS.Get<SpriteEnt>(entity).name == "explodeOne")
+                {
+                    globalECS.Get<SpriteEnt>(entity).pos.x = 0;
+                    globalECS.Get<SpriteEnt>(entity).pos.y = 2000;
+                }
+                if (globalECS.Get<SpriteEnt>(entity).name == "explodeTwo")
+                {
+                    globalECS.Get<SpriteEnt>(entity).pos.x = 0;
+                    globalECS.Get<SpriteEnt>(entity).pos.y = 2000;
+                }
+                if (globalECS.Get<SpriteEnt>(entity).name == "explodeThree")
+                {
+                    globalECS.Get<SpriteEnt>(entity).pos.x = 0;
+                    globalECS.Get<SpriteEnt>(entity).pos.y = 2000;
+                }
+                //std::cout << globalECS.Get<SpriteEnt>(entity).name << " Name of sprite" << endl;
+                if (globalECS.Get<SpriteEnt>(entity).name == "lose")
+                {
+                    globalECS.Get<SpriteEnt>(entity).pos.x = 1000;
+                }
+                });
+        }
+            });
     }
     else if (gameplay == true)
     {
+        if (explosionDurationOne < 10)
+        {
+            explosionDurationOne += 1;
+        }
+        else
+        {
+            globalECS.ForEach<SpriteEnt>([&](ECS::EntityID entity) {
+                if (globalECS.Get<SpriteEnt>(entity).name == "explodeOne")
+                    globalECS.Get<SpriteEnt>(entity).pos.y = 2000;
+                });
+        }
+        if (explosionDurationTwo < 10)
+        {
+            explosionDurationTwo += 1;
+        }
+        else
+        {
+            globalECS.ForEach<SpriteEnt>([&](ECS::EntityID entity) {
+                if (globalECS.Get<SpriteEnt>(entity).name == "explodeTwo")
+                    globalECS.Get<SpriteEnt>(entity).pos.y = 2000;
+                });
+        }
+        if (explosionDurationThree < 10)
+        {
+            explosionDurationThree += 1;
+        }
+        else
+        {
+            globalECS.ForEach<SpriteEnt>([&](ECS::EntityID entity) {
+                if (globalECS.Get<SpriteEnt>(entity).name == "explodeThree")
+                    globalECS.Get<SpriteEnt>(entity).pos.y = 2000;
+                });
+        }
         speedUp = 0;
         globalECS.ForEach<SpriteEnt>([&](ECS::EntityID entity) { //Slow down naturally
 
@@ -724,6 +881,8 @@ void callback()
         int bThreeX = 0;
         int bThreeY = 0;
         int entCount = 0;
+        int collisionSpotX = 0;
+        int collisionSpotY = 0;
         globalECS.ForEach<SpriteEnt>([&](ECS::EntityID entity) {
             if (globalECS.Get<SpriteEnt>(entity).scale.x == 4 && globalECS.Get<SpriteEnt>(entity).scale.y == 4)
             {
@@ -748,7 +907,7 @@ void callback()
             //std::cout << "BULL" << globalECS.Get<SpriteEnt>(entity).pos.y << endl;
             });
         globalECS.ForEach<SpriteEnt>([&](ECS::EntityID entity) {
-            if (globalECS.Get<SpriteEnt>(entity).scale.x == 6 && globalECS.Get<SpriteEnt>(entity).scale.y == 6) //this is where enemies are hit
+            if ((globalECS.Get<SpriteEnt>(entity).scale.x == 6 && globalECS.Get<SpriteEnt>(entity).scale.y == 6) || globalECS.Get<SpriteEnt>(entity).scale.x == -6) //this is where enemies are hit
             {
                 //std::cout << "SCALE 5 5 LOLLLLLLLLL" << globalECS.Get<SpriteEnt>(entity).name << endl;
                 if ((abs(xShipPos - globalECS.Get<SpriteEnt>(entity).pos.x) < 10) && (abs(yShipPos - globalECS.Get<SpriteEnt>(entity).pos.y) < 10))
@@ -777,7 +936,8 @@ void callback()
                 }
                 if ((abs(bOneX - globalECS.Get<SpriteEnt>(entity).pos.x) < 10) && (abs(bOneY - globalECS.Get<SpriteEnt>(entity).pos.y) < 10))
                 {
-                   
+                        collisionSpotY = globalECS.Get<SpriteEnt>(entity).pos.y;
+                        collisionSpotX = globalECS.Get<SpriteEnt>(entity).pos.x;
                         if (globalECS.Get<SpriteEnt>(entity).name == "MarioTwo1")
                         {
                             globalECS.Get<SpriteEnt>(entity).pos.x = -70;
@@ -815,10 +975,53 @@ void callback()
                             globalECS.Get<SpriteEnt>(entity).pos.y = 43;
                             keepHorizontal6 = true;
                         }
-
+                        //globalECS.Get<SpriteEnt>(entity).pos.y = 2000;
+                        globalECS.ForEach<SpriteEnt>([&](ECS::EntityID entity) {
+                            if (globalECS.Get<SpriteEnt>(entity).scale.x == 20)
+                            {
+                                if (explodePick == 0)
+                                {
+                                    if (globalECS.Get<SpriteEnt>(entity).name == "explodeOne")
+                                    {
+                                        explosionDurationOne = 0;
+                                        globalECS.Get<SpriteEnt>(entity).pos.x = collisionSpotX;
+                                        globalECS.Get<SpriteEnt>(entity).pos.y = collisionSpotY;
+                                    }
+                                }
+                                else if (explodePick == 1)
+                                {
+                                    if (globalECS.Get<SpriteEnt>(entity).name == "explodeTwo")
+                                    {
+                                        explosionDurationTwo = 0;
+                                        globalECS.Get<SpriteEnt>(entity).pos.x = collisionSpotX;
+                                        globalECS.Get<SpriteEnt>(entity).pos.y = collisionSpotY;
+                                    }
+                                }
+                                else if (explodePick == 2)
+                                {
+                                    if (globalECS.Get<SpriteEnt>(entity).name == "explodeThree")
+                                    {
+                                        explosionDurationThree = 0;
+                                        globalECS.Get<SpriteEnt>(entity).pos.x = collisionSpotX;
+                                        globalECS.Get<SpriteEnt>(entity).pos.y = collisionSpotY;
+                                    }
+                                }
+                            }
+                            });
+                        if (explodePick < 2)
+                        {
+                            explodePick++;
+                        }
+                        else
+                        {
+                            explodePick = 0;
+                        }
+                        //globalECS.Get<SpriteEnt>(entity).pos.x globalECS.Get<SpriteEnt>(entity).pos.x
                 }
                 if ((abs(bTwoX - globalECS.Get<SpriteEnt>(entity).pos.x) < 10) && (abs(bTwoY - globalECS.Get<SpriteEnt>(entity).pos.y) < 10))
                 {
+                        collisionSpotY = globalECS.Get<SpriteEnt>(entity).pos.y;
+                        collisionSpotX = globalECS.Get<SpriteEnt>(entity).pos.x;
                         if (globalECS.Get<SpriteEnt>(entity).name == "MarioTwo1")
                         {
                             globalECS.Get<SpriteEnt>(entity).pos.x = -70;
@@ -856,10 +1059,51 @@ void callback()
                             globalECS.Get<SpriteEnt>(entity).pos.y = 43;
                             keepHorizontal6 = true;
                         }
-
+                        globalECS.ForEach<SpriteEnt>([&](ECS::EntityID entity) {
+                            if (globalECS.Get<SpriteEnt>(entity).scale.x == 20)
+                            {
+                                if (explodePick == 0)
+                                {
+                                    if (globalECS.Get<SpriteEnt>(entity).name == "explodeOne")
+                                    {
+                                        explosionDurationOne = 0;
+                                        globalECS.Get<SpriteEnt>(entity).pos.x = collisionSpotX;
+                                        globalECS.Get<SpriteEnt>(entity).pos.y = collisionSpotY;
+                                    }
+                                }
+                                else if (explodePick == 1)
+                                {
+                                    if (globalECS.Get<SpriteEnt>(entity).name == "explodeTwo")
+                                    {
+                                        explosionDurationTwo = 0;
+                                        globalECS.Get<SpriteEnt>(entity).pos.x = collisionSpotX;
+                                        globalECS.Get<SpriteEnt>(entity).pos.y = collisionSpotY;
+                                    }
+                                }
+                                else if (explodePick == 2)
+                                {
+                                    if (globalECS.Get<SpriteEnt>(entity).name == "explodeThree")
+                                    {
+                                        explosionDurationThree = 0;
+                                        globalECS.Get<SpriteEnt>(entity).pos.x = collisionSpotX;
+                                        globalECS.Get<SpriteEnt>(entity).pos.y = collisionSpotY;
+                                    }
+                                }
+                            }
+                            });
+                        if (explodePick < 2)
+                        {
+                            explodePick++;
+                        }
+                        else
+                        {
+                            explodePick = 0;
+                        }
                 }
                 if ((abs(bThreeX - globalECS.Get<SpriteEnt>(entity).pos.x) < 10) && (abs(bThreeY - globalECS.Get<SpriteEnt>(entity).pos.y) < 10))
                 {
+                        collisionSpotY = globalECS.Get<SpriteEnt>(entity).pos.y;
+                        collisionSpotX = globalECS.Get<SpriteEnt>(entity).pos.x;
                         if (globalECS.Get<SpriteEnt>(entity).name == "MarioTwo1")
                         {
                             globalECS.Get<SpriteEnt>(entity).pos.x = -70;
@@ -897,7 +1141,46 @@ void callback()
                             globalECS.Get<SpriteEnt>(entity).pos.y = 43;
                             keepHorizontal6 = true;
                         }
-
+                        globalECS.ForEach<SpriteEnt>([&](ECS::EntityID entity) {
+                            if (globalECS.Get<SpriteEnt>(entity).scale.x == 20)
+                            {
+                                if (explodePick == 0)
+                                {
+                                    if (globalECS.Get<SpriteEnt>(entity).name == "explodeOne")
+                                    {
+                                        explosionDurationOne = 0;
+                                        globalECS.Get<SpriteEnt>(entity).pos.x = collisionSpotX;
+                                        globalECS.Get<SpriteEnt>(entity).pos.y = collisionSpotY;
+                                    }
+                                }
+                                else if (explodePick == 1)
+                                {
+                                    if (globalECS.Get<SpriteEnt>(entity).name == "explodeTwo")
+                                    {
+                                        explosionDurationTwo = 0;
+                                        globalECS.Get<SpriteEnt>(entity).pos.x = collisionSpotX;
+                                        globalECS.Get<SpriteEnt>(entity).pos.y = collisionSpotY;
+                                    }
+                                }
+                                else if (explodePick == 2)
+                                {
+                                    if (globalECS.Get<SpriteEnt>(entity).name == "explodeThree")
+                                    {
+                                        explosionDurationThree = 0;
+                                        globalECS.Get<SpriteEnt>(entity).pos.x = collisionSpotX;
+                                        globalECS.Get<SpriteEnt>(entity).pos.y = collisionSpotY;
+                                    }
+                                }
+                            }
+                            });
+                        if (explodePick < 2)
+                        {
+                            explodePick++;
+                        }
+                        else
+                        {
+                            explodePick = 0;
+                        }
                 }
 
                 //std::cout << "Bullet One Name: " << globalECS.Get<SpriteEnt>(globulletOne).pos.x << endl;
@@ -959,6 +1242,13 @@ int main(int argc, const char* argv[]) {
     globalECS.Get<SpriteEnt>(newIDTwo11) = SpriteEnt{ "bossRat1", "./assets/bossRat.png", vec2(-80, 2000), vec2(0,0), vec2(6,6), 0 };
     ECS::EntityID newIDTwo12 = globalECS.Create();
     globalECS.Get<SpriteEnt>(newIDTwo12) = SpriteEnt{ "bossRat2", "./assets/bossRat.png", vec2(80, 2500), vec2(0,0), vec2(-6,6), 0 };
+
+    ECS::EntityID explodeyOne = globalECS.Create();
+    globalECS.Get<SpriteEnt>(explodeyOne) = SpriteEnt{ "explodeOne", "./assets/explodey.png", vec2(0,2000), vec2(0,0), vec2(20,20), 0 };
+    ECS::EntityID explodeyTwo = globalECS.Create();
+    globalECS.Get<SpriteEnt>(explodeyTwo) = SpriteEnt{ "explodeTwo", "./assets/explodey.png", vec2(0,2000), vec2(0,0), vec2(20,20), 0 };
+    ECS::EntityID explodeyThree = globalECS.Create();
+    globalECS.Get<SpriteEnt>(explodeyThree) = SpriteEnt{ "explodeThree", "./assets/explodey.png", vec2(0,2000), vec2(0,0), vec2(20,20), 0 };
 
     ECS::EntityID loseID = globalECS.Create();
     globalECS.Get<SpriteEnt>(loseID) = SpriteEnt{ "lose", "./assets/youlose.jpg", vec2(2000,0), vec2(0,0), vec2(100,100), 0 };
